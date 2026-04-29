@@ -1,16 +1,67 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        header, nav, main, section, article, aside, footer {
+            border: 2px dashed #999;
+            padding: 10px;
+            margin: 5px;
+        }
+        header { background: #f4f4f4; }
+        nav { background: #ddd; }
+        main { display: flex; }
+        section { flex: 2; }
+        aside { flex: 1; }
+        footer { background: #ccc; text-align: center; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Pet Shop</h1>
-        <p>Projeto de Site para Pet Shop</p>
-        <p>Camilly Victoria</p>
-    </div>
-    
+
+    <header>
+        <h1>Logo / Nome do Site</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li>Home</li>
+            <li>Sobre</li>
+            <li>Serviços</li>
+            <li>Contato</li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Conteúdo Principal</h2>
+
+            <article>
+                <h3>Artigo 1</h3>
+                <p>Resumo do conteúdo...</p>
+            </article>
+
+            <article>
+                <h3>Artigo 2</h3>
+                <p>Resumo do conteúdo...</p>
+            </article>
+
+        </section>
+
+        <aside>
+            <h2>Barra Lateral</h2>
+            <p>Links ou informações adicionais</p>
+        </aside>
+    </main>
+
+    <footer>
+        <p>Camilly Victoria - © 2026</p>
+    </footer>
+
 </body>
 </html>
