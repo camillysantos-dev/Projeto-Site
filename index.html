@@ -4,64 +4,572 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Shop</title>
+   
+    <!-- Bootstrap 5 CSS + Icons + Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   
+    <!-- Custom CSS adicional para wireframe -->
     <style>
+        /* Custom styles para manter o visual de wireframe */
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px 0;
         }
-        header, nav, main, section, article, aside, footer {
-            border: 2px dashed #999;
-            padding: 10px;
-            margin: 5px;
+       
+        /* Estilo wireframe para elementos semânticos */
+        .wireframe-border {
+            border: 2px dashed #adb5bd;
+            background: white;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            position: relative;
         }
-        header { background: #f4f4f4; }
-        nav { background: #ddd; }
-        main { display: flex; }
-        section { flex: 2; }
-        aside { flex: 1; }
-        footer { background: #ccc; text-align: center; }
+       
+        .wireframe-border:hover {
+            border-color: #0d6efd;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+       
+        /* Labels para tags semânticas */
+        .semantic-label {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: linear-gradient(135deg, #0d6efd, #0a58ca);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            font-family: monospace;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+       
+        /* Header personalizado */
+        .logo-area {
+            background: linear-gradient(135deg, #f8f9fa, white);
+            border: 2px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+       
+        .logo-area:hover {
+            border-color: #0d6efd;
+            transform: scale(1.02);
+        }
+       
+        /* Cards com hover effect */
+        .hover-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #dee2e6;
+        }
+       
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+            border-color: #0d6efd;
+        }
+       
+        /* Placeholder para imagens */
+        .image-placeholder {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+       
+        .image-placeholder i {
+            font-size: 3rem;
+            color: #6c757d;
+        }
+       
+        .hover-card:hover .image-placeholder {
+            transform: scale(1.05);
+        }
+       
+        /* Navegação personalizada */
+        .nav-custom {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+        }
+       
+        .nav-custom .nav-link {
+            color: white;
+            transition: all 0.3s ease;
+            border-radius: 0.5rem;
+            margin: 0 0.25rem;
+        }
+       
+        .nav-custom .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+       
+        /* Sidebar */
+        .sidebar-widget {
+            background: linear-gradient(135deg, #f8f9fa, white);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            transition: all 0.3s ease;
+        }
+       
+        .sidebar-widget:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+       
+        /* Footer */
+        .footer-custom {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 2rem 0;
+        }
+       
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+       
+        .footer-link:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+       
+        /* Animações */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+       
+        .animate-on-scroll {
+            animation: fadeInUp 0.6s ease-out;
+        }
+       
+        /* Badge para elementos semânticos no modo wireframe */
+        .semantic-badge {
+            position: relative;
+        }
+       
+        /* Estilo para depoimentos */
+        .testimonial-card {
+            background: linear-gradient(135deg, #f8f9fa, white);
+            border-left: 4px solid #0d6efd;
+        }
+       
+        /* Responsividade extra */
+        @media (max-width: 768px) {
+            .semantic-label {
+                font-size: 0.65rem;
+                padding: 2px 8px;
+            }
+           
+            .image-placeholder {
+                height: 140px;
+            }
+        }
+       
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+       
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+       
+        ::-webkit-scrollbar-thumb {
+            background: #0d6efd;
+            border-radius: 5px;
+        }
+       
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0a58ca;
+        }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1>Logo / Nome do Site</h1>
-    </header>
-
-    <nav>
-        <ul>
-            <li>Home</li>
-            <li>Sobre</li>
-            <li>Serviços</li>
-            <li>Contato</li>
-        </ul>
-    </nav>
-
-    <main>
-        <section>
-            <h2>Conteúdo Principal</h2>
-
-            <article>
-                <h3>Artigo 1</h3>
-                <p>Resumo do conteúdo...</p>
-            </article>
-
-            <article>
-                <h3>Artigo 2</h3>
-                <p>Resumo do conteúdo...</p>
-            </article>
-
-        </section>
-
-        <aside>
-            <h2>Barra Lateral</h2>
-            <p>Links ou informações adicionais</p>
-        </aside>
-    </main>
-
-    <footer>
-        <p>Camilly Victoria - © 2026</p>
-    </footer>
-
+    <div class="container py-4">
+       
+        <!-- ============================================ -->
+        <!-- HEADER SEMÂNTICO -->
+        <!-- ============================================ -->
+        <header class="wireframe-border mb-4 semantic-badge">
+            <div class="semantic-label">&lt;header&gt;</div>
+            <div class="p-4">
+                <div class="logo-area text-center">
+                    <i class="bi bi-bootstrap-fill fs-1 text-primary mb-2"></i>
+                    <h1 class="display-5 fw-bold bg-gradient bg-clip-text" style="background: linear-gradient(135deg, #1e293b, #0d6efd); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        Minha Empresa
+                    </h1>
+                    <p class="lead text-secondary">Soluções inovadoras para o futuro digital</p>
+                    <div class="mt-3">
+                        <span class="badge bg-primary me-2"><i class="bi bi-star-fill"></i> Destaque</span>
+                        <span class="badge bg-info"><i class="bi bi-trophy-fill"></i> Premiado</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+ 
+        <!-- ============================================ -->
+        <!-- NAVEGAÇÃO SEMÂNTICA -->
+        <!-- ============================================ -->
+        <nav class="wireframe-border mb-4 semantic-badge">
+            <div class="semantic-label">&lt;nav&gt;</div>
+            <div class="p-3">
+                <div class="nav-custom">
+                    <ul class="nav justify-content-center flex-wrap">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"><i class="bi bi-house-fill me-1"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-info-circle-fill me-1"></i> Sobre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-briefcase-fill me-1"></i> Serviços</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-grid-3x3-gap-fill me-1"></i> Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-envelope-fill me-1"></i> Contato</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-newspaper me-1"></i> Blog</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+ 
+        <!-- ============================================ -->
+        <!-- GRID PRINCIPAL: MAIN + ASIDE -->
+        <!-- ============================================ -->
+        <div class="row g-4 mb-4">
+           
+            <!-- MAIN - CONTEÚDO PRINCIPAL -->
+            <div class="col-lg-8">
+                <main class="wireframe-border semantic-badge h-100">
+                    <div class="semantic-label">&lt;main&gt;</div>
+                    <div class="p-4">
+                       
+                        <!-- Seção de Destaque -->
+                        <section class="wireframe-border mb-5 semantic-badge">
+                            <div class="semantic-label">&lt;section&gt;</div>
+                            <div class="p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="bi bi-megaphone-fill fs-1 text-primary me-3"></i>
+                                    <h2 class="h3 mb-0">Seção de Destaque</h2>
+                                </div>
+                                <p class="lead">Bem-vindo à nossa plataforma! Aqui você encontra as melhores soluções para o seu negócio.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                                <button class="btn btn-primary mt-2">
+                                    <i class="bi bi-arrow-right-circle"></i> Saiba mais
+                                </button>
+                            </div>
+                        </section>
+ 
+                        <!-- Seção de Artigos/Produtos -->
+                        <section class="mb-5 semantic-badge">
+                            <div class="semantic-label position-relative" style="top: -12px; left: 20px; background: #0d6efd; color: white; padding: 4px 12px; font-size: 0.75rem; font-weight: bold; border-radius: 20px; display: inline-block; margin-bottom: -30px;">
+                                &lt;section&gt;
+                            </div>
+                            <div class="mt-4">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h2 class="h3 mb-0"><i class="bi bi-newspaper me-2 text-primary"></i>Últimos Artigos</h2>
+                                    <a href="#" class="text-decoration-none">Ver todos <i class="bi bi-arrow-right"></i></a>
+                                </div>
+                               
+                                <div class="row g-4">
+                                    <!-- Article 1 -->
+                                    <div class="col-md-6 col-lg-4">
+                                        <article class="hover-card h-100 border rounded-3 p-3 bg-white">
+                                            <div class="image-placeholder">
+                                                <i class="bi bi-image-fill"></i>
+                                            </div>
+                                            <h3 class="h5 mb-2">Título do Artigo 1</h3>
+                                            <p class="text-secondary small mb-2">
+                                                <i class="bi bi-calendar3 me-1"></i> 15/01/2024
+                                                <i class="bi bi-person-circle ms-2 me-1"></i> Autor
+                                            </p>
+                                            <p>Descrição resumida do conteúdo do artigo. Lorem ipsum dolor sit amet consectetur.</p>
+                                            <a href="#" class="text-decoration-none">Ler mais <i class="bi bi-arrow-right-short"></i></a>
+                                        </article>
+                                    </div>
+                                   
+                                    <!-- Article 2 -->
+                                    <div class="col-md-6 col-lg-4">
+                                        <article class="hover-card h-100 border rounded-3 p-3 bg-white">
+                                            <div class="image-placeholder">
+                                                <i class="bi bi-code-square"></i>
+                                            </div>
+                                            <h3 class="h5 mb-2">Título do Artigo 2</h3>
+                                            <p class="text-secondary small mb-2">
+                                                <i class="bi bi-calendar3 me-1"></i> 18/01/2024
+                                                <i class="bi bi-person-circle ms-2 me-1"></i> Autor
+                                            </p>
+                                            <p>Descrição resumida do conteúdo do artigo. Lorem ipsum dolor sit amet consectetur.</p>
+                                            <a href="#" class="text-decoration-none">Ler mais <i class="bi bi-arrow-right-short"></i></a>
+                                        </article>
+                                    </div>
+                                   
+                                    <!-- Article 3 -->
+                                    <div class="col-md-6 col-lg-4">
+                                        <article class="hover-card h-100 border rounded-3 p-3 bg-white">
+                                            <div class="image-placeholder">
+                                                <i class="bi bi-graph-up"></i>
+                                            </div>
+                                            <h3 class="h5 mb-2">Título do Artigo 3</h3>
+                                            <p class="text-secondary small mb-2">
+                                                <i class="bi bi-calendar3 me-1"></i> 20/01/2024
+                                                <i class="bi bi-person-circle ms-2 me-1"></i> Autor
+                                            </p>
+                                            <p>Descrição resumida do conteúdo do artigo. Lorem ipsum dolor sit amet consectetur.</p>
+                                            <a href="#" class="text-decoration-none">Ler mais <i class="bi bi-arrow-right-short"></i></a>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+ 
+                        <!-- Seção de Depoimentos -->
+                        <section class="semantic-badge">
+                            <div class="semantic-label position-relative" style="top: -12px; left: 20px; background: #0d6efd; color: white; padding: 4px 12px; font-size: 0.75rem; font-weight: bold; border-radius: 20px; display: inline-block; margin-bottom: -30px;">
+                                &lt;section&gt;
+                            </div>
+                            <div class="mt-4">
+                                <h2 class="h3 mb-4"><i class="bi bi-chat-quote-fill me-2 text-primary"></i>Depoimentos</h2>
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="testimonial-card p-4 rounded-3 border">
+                                            <i class="bi bi-quote fs-1 text-primary opacity-50"></i>
+                                            <p class="mb-2">"Excelente serviço! Recomendo para todos os meus colegas de trabalho."</p>
+                                            <hr class="my-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi bi-person-circle fs-2 me-2 text-secondary"></i>
+                                                <div>
+                                                    <strong>João Silva</strong>
+                                                    <div class="small text-warning">
+                                                        <i class="bi bi-star-fill"></i>
+                                                        <i class="bi bi-star-fill"></i>
+                                                        <i class="bi bi-star-fill"></i>
+                                                        <i class="bi bi-star-fill"></i>
+                                                        <i class="bi bi-star-fill"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="testimonial-card p-4 rounded-3 border">
+                                            <i class="bi bi-quote fs-1 text-primary opacity-50"></i>
+                                            <p class="mb-2">"Profissionais muito competentes e atenciosos. Superaram expectativas!"</p>
+                                            <hr class="my-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi bi-person-circle fs-2 me-2 text-secondary"></i>
+                                                <div>
+                                                    <strong>Maria Santos</strong>
+                                                    <div class="small text-warning">
+                                                        <i class="bi bi-star-fill"></i>
+                                                        <i class="bi bi-star-fill"></i>
+                                                        <i class="bi bi-star-fill"></i>
+                                                        <i class="bi bi-star-fill"></i>
+                                                        <i class="bi bi-star-half"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+            </div>
+           
+            <!-- ASIDE - BARRA LATERAL -->
+            <div class="col-lg-4">
+                <aside class="wireframe-border semantic-badge h-100">
+                    <div class="semantic-label">&lt;aside&gt;</div>
+                    <div class="p-4">
+                       
+                        <!-- Widget de Categorias -->
+                        <div class="sidebar-widget">
+                            <h4 class="h5 mb-3"><i class="bi bi-tags-fill me-2 text-primary"></i>Categorias</h4>
+                            <div class="list-group list-group-flush">
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0 px-0">
+                                    Tecnologia <span class="badge bg-primary rounded-pill">12</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0 px-0">
+                                    Inovação <span class="badge bg-primary rounded-pill">8</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0 px-0">
+                                    Design <span class="badge bg-primary rounded-pill">15</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0 px-0">
+                                    Marketing <span class="badge bg-primary rounded-pill">6</span>
+                                </a>
+                            </div>
+                        </div>
+                       
+                        <!-- Widget de Newsletter -->
+                        <div class="sidebar-widget">
+                            <h4 class="h5 mb-3"><i class="bi bi-envelope-paper-fill me-2 text-primary"></i>Newsletter</h4>
+                            <p class="small">Receba novidades e promoções exclusivas por email.</p>
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Seu melhor email">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="bi bi-send-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                       
+                        <!-- Widget de Redes Sociais -->
+                        <div class="sidebar-widget">
+                            <h4 class="h5 mb-3"><i class="bi bi-share-fill me-2 text-primary"></i>Redes Sociais</h4>
+                            <div class="d-flex justify-content-around">
+                                <a href="#" class="text-secondary fs-2"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="text-secondary fs-2"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="text-secondary fs-2"><i class="bi bi-twitter-x"></i></a>
+                                <a href="#" class="text-secondary fs-2"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                       
+                        <!-- Widget de Tags -->
+                        <div class="sidebar-widget">
+                            <h4 class="h5 mb-3"><i class="bi bi-hash me-2 text-primary"></i>Tags Populares</h4>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-secondary">HTML5</span>
+                                <span class="badge bg-secondary">CSS3</span>
+                                <span class="badge bg-secondary">Bootstrap</span>
+                                <span class="badge bg-secondary">JavaScript</span>
+                                <span class="badge bg-secondary">React</span>
+                                <span class="badge bg-secondary">Node.js</span>
+                            </div>
+                        </div>
+                       
+                        <!-- Widget de Anúncio -->
+                        <div class="sidebar-widget text-center bg-primary bg-opacity-10">
+                            <i class="bi bi-megaphone-fill fs-1 text-primary"></i>
+                            <h5 class="mt-2">Espaço para Anúncio</h5>
+                            <p class="small">Entre em contato para divulgar sua marca aqui!</p>
+                            <button class="btn btn-outline-primary btn-sm">Saiba mais</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+ 
+        <!-- ============================================ -->
+        <!-- FOOTER SEMÂNTICO -->
+        <!-- ============================================ -->
+        <footer class="wireframe-border semantic-badge">
+            <div class="semantic-label">&lt;footer&gt;</div>
+            <div class="footer-custom">
+                <div class="container">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <h4 class="h5 mb-3"><i class="bi bi-building me-2"></i>Sobre Nós</h4>
+                            <p class="text-secondary">Somos uma empresa dedicada a fornecer soluções inovadoras com excelência e compromisso com nossos clientes.</p>
+                            <div class="mt-3">
+                                <i class="bi bi-award-fill text-primary me-1"></i> 10+ anos no mercado<br>
+                                <i class="bi bi-people-fill text-primary me-1"></i> 500+ clientes satisfeitos
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-4">
+                            <h4 class="h5 mb-3"><i class="bi bi-link-45deg me-2"></i>Links Rápidos</h4>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a href="#" class="footer-link"><i class="bi bi-chevron-right me-1"></i> Política de Privacidade</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link"><i class="bi bi-chevron-right me-1"></i> Termos de Uso</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link"><i class="bi bi-chevron-right me-1"></i> Trabalhe Conosco</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link"><i class="bi bi-chevron-right me-1"></i> FAQ - Perguntas Frequentes</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link"><i class="bi bi-chevron-right me-1"></i> Suporte ao Cliente</a></li>
+                            </ul>
+                        </div>
+                       
+                        <div class="col-md-4">
+                            <h4 class="h5 mb-3"><i class="bi bi-telephone-fill me-2"></i>Contato</h4>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="bi bi-geo-alt-fill me-2 text-primary"></i> Av. Paulista, 1000 - São Paulo/SP</li>
+                                <li class="mb-2"><i class="bi bi-telephone-fill me-2 text-primary"></i> (11) 9999-9999</li>
+                                <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-primary"></i> contato@empresa.com.br</li>
+                                <li class="mb-2"><i class="bi bi-clock-fill me-2 text-primary"></i> Seg-Sex: 9h às 18h</li>
+                            </ul>
+                        </div>
+                    </div>
+                   
+                    <hr class="my-4 bg-secondary">
+                   
+                    <div class="text-center">
+                        <p class="text-secondary mb-0">
+                            <i class="bi bi-c-circle me-1"></i> 2024 Minha Empresa - Todos os direitos reservados
+                        </p>
+                        <div class="mt-2">
+                            <a href="#" class="text-secondary me-3"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="text-secondary me-3"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="text-secondary me-3"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#" class="text-secondary"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+ 
+    <!-- Bootstrap JS Bundle com Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+   
+    <!-- Script adicional para tooltips e interações -->
+    <script>
+        // Inicializar tooltips do Bootstrap
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tooltips para elementos com título
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+           
+            // Adicionar classe de animação no scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+           
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-on-scroll');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+           
+            // Observar cards e seções
+            document.querySelectorAll('article, .sidebar-widget, section').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
 </html>
